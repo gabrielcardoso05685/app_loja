@@ -1,22 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}App Loja{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>
+        {% block title %}App Loja{% endblock %}
+    </title>
+
+    <!-- Carrega o arquivo CSS do projeto. -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 <body>
+
 <header class="topbar">
-    <a href="{{ url_for('dashboard') }}" class="logo">App Loja</a>
+
+    <!-- Nome do sistema. -->
+    <a href="{{ url_for('dashboard') }}" class="logo">
+        App Loja
+    </a>
+
     <nav>
-        <a href="{{ url_for('dashboard') }}">Produtos</a>
-        <a href="{{ url_for('cadastrar_usuario') }}">Cadastrar Usuário</a>
-        <a href="{{ url_for('logout') }}">Sair</a>
+
+        <!-- Link para o dashboard. -->
+        <a href="{{ url_for('dashboard') }}">
+            Produtos
+        </a>
+
+
+        <!-- MENU USUÁRIOS -->
+        <div class="menu-dropdown">
+
+            <!-- Nome principal do menu. -->
+            <a href="#" class="menu-link">
+                Usuários
+                <span class="seta">▼</span>
+            </a>
+
+
+            <!-- SUBMENU -->
+            <div class="submenu">
+
+                <!-- Abre a listagem dos usuários. -->
+                <a href="{{ url_for('listar_usuarios') }}">
+                    Listagem de Usuários
+                </a>
+
+                <!-- Abre o cadastro de usuários. -->
+                <a href="{{ url_for('cadastrar_usuario') }}">
+                    Cadastro de Usuários
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Sai do sistema. -->
+        <a href="{{ url_for('logout') }}">
+            Sair
+        </a>
+
     </nav>
+
 </header>
+
+
 <main class="conteudo">
-    {% block content %}{% endblock %}
+
+    <!--
+        Cada página que utiliza base.html
+        colocará seu conteúdo neste bloco.
+    -->
+    {% block content %}
+    {% endblock %}
+
 </main>
+
 </body>
+
 </html>

@@ -1,18 +1,57 @@
-{% extends "base_sem_menu.html" %}
 
-{% block title %}Início | App Loja{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}
+Início | App Loja
+{% endblock %}
+
 
 {% block content %}
+
+<!--
+    Página inicial de apresentação do projeto.
+-->
 <main class="home-page">
+
     <section class="home-card">
-        <div class="home-icon">🛍️</div>
-        <span class="tag">PROJETO FLASK</span>
-        <h1>Bem-vindo ao <span>App Loja</span></h1>
+
+        <div class="home-icon">
+            🛍️
+        </div>
+
+
+        <span class="tag">
+            PROJETO FLASK
+        </span>
+
+
+        <h1>
+            Bem-vindo ao <span>App Loja</span>
+        </h1>
+
+
         <p>
-            Projeto simples para estudo de Flask, rotas, templates HTML e CSS.
-            Os cadastros são apenas demonstrativos e não utilizam banco de dados.
+            Projeto simples para estudo de Flask,
+            rotas, templates HTML e CSS.
+            Os cadastros são apenas demonstrativos
+            e não utilizam banco de dados.
         </p>
-        <a href="{{ url_for('login') }}" class="btn-primary">Acessar sistema</a>
+
+
+        <!--
+            url_for('login') encontra automaticamente
+            a rota associada à função login().
+        -->
+        <a
+            href="{{ url_for('login') }}"
+            class="btn-primary"
+        >
+            Acessar sistema
+        </a>
+
     </section>
+
 </main>
+
 {% endblock %}
+

@@ -1,35 +1,113 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Login | App Loja</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!--
+        Carrega o arquivo CSS da pasta static.
+    -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
 </head>
+
 <body class="pagina-login">
-<section class="login-card">
-    <h1>App Loja</h1>
-    <p>Entre para acessar o sistema.</p>
 
-    {% if erro %}
-        <div class="erro">{{ erro }}</div>
-    {% endif %}
+    <section class="login-card">
 
-    <form method="POST">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+        <h1>App Loja</h1>
 
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+        <p>Entre para acessar o sistema.</p>
 
-        <button type="submit">Entrar</button>
-    </form>
 
-    <div class="dados-teste">
-        <strong>Usuário de teste</strong>
-        <span>admin@loja.com</span>
-        <span>Senha: 123</span>
-    </div>
-</section>
+        <!--
+            O bloco abaixo só aparece quando
+            existe uma mensagem de erro.
+        -->
+        {% if erro %}
+
+            <div class="erro">
+                {{ erro }}
+            </div>
+
+        {% endif %}
+
+
+        <!--
+            Formulário de login.
+
+            method="POST" envia os dados para
+            a rota /login.
+        -->
+        <form method="POST">
+
+            <label for="email">
+                E-mail
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Digite seu e-mail"
+                required
+            >
+
+
+            <label for="senha">
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Digite sua senha"
+                required
+            >
+
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </form>
+
+
+        <!--
+            Dados utilizados para testar o login.
+        -->
+        <div class="dados-teste">
+
+            <strong>
+                Usuário de teste
+            </strong>
+
+            <span>
+                admin@loja.com
+            </span>
+
+            <span>
+                Senha: 123
+            </span>
+
+        </div>
+
+    </section>
+
 </body>
+
 </html>
+

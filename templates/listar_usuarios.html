@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+Listagem de Usuários | App Loja
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Título da página. -->
+<h1>Usuários Cadastrados</h1>
+
+<p class="descricao-listagem">
+    Confira abaixo os usuários cadastrados no sistema.
+</p>
+
+
+<!-- Tabela de usuários. -->
+<div class="tabela-container">
+
+    <table class="tabela-usuarios">
+
+        <thead>
+
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Celular</th>
+                <th>Nível</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            <!--
+                Percorre a lista de usuários
+                enviada pelo app.py.
+            -->
+            {% for usuario in usuarios %}
+
+            <tr>
+
+                <td>
+                    {{ usuario.nome }}
+                </td>
+
+                <td>
+                    {{ usuario.email }}
+                </td>
+
+                <td>
+                    {{ usuario.celular or "-" }}
+                </td>
+
+                <td>
+                    {{ usuario.nivel or "Administrador" }}
+                </td>
+
+                <td>
+                    {{ usuario.cidade or "-" }}
+                </td>
+
+                <td>
+                    {{ usuario.estado or "-" }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!--
+    Caso não exista nenhum usuário,
+    mostra esta mensagem.
+-->
+{% if not usuarios %}
+
+    <div class="sem-usuarios">
+        Nenhum usuário cadastrado.
+    </div>
+
+{% endif %}
+
+
+{% endblock %}

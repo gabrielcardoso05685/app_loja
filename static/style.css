@@ -1,65 +1,370 @@
-* { 
-    box-sizing: border-box; 
+
+/* =========================================================
+   CONFIGURAÇÃO GERAL
+   ========================================================= */
+
+/* Faz o tamanho dos elementos considerar também padding e borda. */
+* {
+    box-sizing: border-box;
 }
 
-body { 
-    margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f6f8; color: #222;
- }
-a {
-     text-decoration: none; 
-    }
-.topbar { 
-    display: flex; justify-content: space-between; align-items: center; padding: 18px 7%; background: #202a33; 
+
+/* Estilos básicos de toda a página. */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #222;
 }
-.logo, .topbar nav a { 
+
+
+/* Remove o sublinhado dos links. */
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   MENU SUPERIOR
+   ========================================================= */
+
+/* Organiza o logo e o menu lado a lado. */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 7%;
+    background: #202a33;
+}
+
+
+/* Define a cor dos textos do menu. */
+.logo,
+.topbar nav a {
     color: white;
- }
-.logo { 
-    font-size: 20px; font-weight: bold
-    ; }
-.topbar nav { 
-    display: flex; gap: 20px;
- }
-.conteudo { 
-    width: 86%; max-width: 1000px; margin: 40px auto;
- }
-.produtos { 
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 25px;
- }
-.produto-card { 
-    padding: 22px; background: white; border: 1px solid #ddd; border-radius: 8px;
- }
-.produto-id { 
-    color: #777; font-size: 13px;
- }
-.preco { 
-    color: #009ab5; font-size: 22px; font-weight: bold;
- }
-.pagina-login { 
-    min-height: 100vh; display: flex; justify-content: center; align-items: center;
- }
-.login-card { 
-    width: 100%; max-width: 400px; padding: 30px; background: white; border: 1px solid #ddd; border-radius: 8px; }
-.login-card label, .campo label { 
-    display: block; margin: 12px 0 6px; font-weight: bold;
- }
-.login-card input, .campo input, .campo select { 
-    width: 100%; padding: 11px; border: 1px solid #bbb; border-radius: 5px;
- }
-button { 
-    margin-top: 18px; padding: 11px 18px; border: 0; border-radius: 5px; background: #00aeca; color: white; cursor: pointer;
- }
-.cinza { 
+}
+
+
+/* Estilo do nome "App Loja". */
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* Organiza os links do menu. */
+.topbar nav {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
+
+/* Define a largura e o espaçamento do conteúdo. */
+.conteudo {
+    width: 86%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+
+/* =========================================================
+   PRODUTOS
+   ========================================================= */
+
+/* Cria uma grade com três produtos por linha. */
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+
+/* Estilo de cada cartão de produto. */
+.produto-card {
+    padding: 22px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+/* Estilo do número do produto. */
+.produto-id {
+    color: #777;
+    font-size: 13px;
+}
+
+
+/* Estilo do preço. */
+.preco {
+    color: #009ab5;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+/* Centraliza o cartão de login na tela. */
+.pagina-login {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Estilo do cartão de login. */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+/* Estilo dos textos dos campos. */
+.login-card label,
+.campo label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: bold;
+}
+
+
+/* Estilo dos campos de entrada. */
+.login-card input,
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+
+
+/* Estilo padrão dos botões. */
+button {
+    margin-top: 18px;
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 5px;
+    background: #00aeca;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* Cor do botão "Limpar". */
+.cinza {
     background: #666;
- }
-.erro { 
-    padding: 10px; margin-bottom: 12px; background: #ffdede; color: #9c1f1f;
- }
-.sucesso { 
-    padding: 10px; margin-bottom: 16px; background: #ddf5e3; color: #226b35;
- }
-.dados-teste { 
-    display: flex; flex-direction: column; gap: 4px; margin-top: 20px; padding: 12px; background: #f1f3f5; }
-.formulario { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 24px; background: white; border: 1px solid #ddd; border-radius: 8px; }
-.campo { margin: 0; }
-.acoes { grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 10px; }
+}
+
+
+/* =========================================================
+   MENSAGENS
+   ========================================================= */
+
+/* Mensagem exibida quando o login está incorreto. */
+.erro {
+    padding: 10px;
+    margin-bottom: 12px;
+    background: #ffdede;
+    color: #9c1f1f;
+}
+
+
+/* Mensagem exibida depois do cadastro. */
+.sucesso {
+    padding: 10px;
+    margin-bottom: 16px;
+    background: #ddf5e3;
+    color: #226b35;
+}
+
+
+/* =========================================================
+   DADOS DO USUÁRIO DE TESTE
+   ========================================================= */
+
+/* Organiza os dados do usuário de teste. */
+.dados-teste {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 20px;
+    padding: 12px;
+    background: #f1f3f5;
+}
+
+
+/* =========================================================
+   FORMULÁRIO DE CADASTRO
+   ========================================================= */
+
+/* Cria duas colunas para os campos do cadastro. */
+.formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 24px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+/* Remove margem adicional dos campos. */
+.campo {
+    margin: 0;
+}
+
+
+/* Coloca os botões ocupando as duas colunas. */
+.acoes {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+/* ==============================
+   MENU USUÁRIOS
+   ============================== */
+
+/* Permite posicionar o submenu abaixo do menu Usuários. */
+.menu-dropdown {
+    position: relative;
+}
+
+/* Link principal "Usuários". */
+.menu-link {
+    display: block;
+    padding: 18px 0;
+    cursor: pointer;
+}
+
+.seta {
+    font-size: 11px;
+    margin-left: 4px;
+}
+
+
+/* Submenu inicialmente escondido. */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    min-width: 210px;
+
+    background: white;
+
+    border: 1px solid #ddd;
+
+    border-radius: 0 0 5px 5px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+
+    z-index: 10;
+}
+
+
+/* Mostra o submenu quando o mouse passa sobre Usuários. */
+.menu-dropdown:hover .submenu {
+    display: block;
+}
+
+
+/* Links existentes dentro do submenu. */
+.submenu a {
+    display: block;
+
+    padding: 12px 16px;
+
+    color: #222;
+
+    white-space: nowrap;
+}
+
+
+/* Efeito quando o mouse passa sobre uma opção. */
+.submenu a:hover {
+    background: #f1f3f5;
+}
+
+
+/* ==============================
+   LISTAGEM DE USUÁRIOS
+   ============================== */
+
+.descricao-listagem {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+
+/* Caixa que contém a tabela. */
+.tabela-container {
+    overflow-x: auto;
+
+    background: white;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+}
+
+
+/* Tabela de usuários. */
+.tabela-usuarios {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+/* Células da tabela. */
+.tabela-usuarios th,
+.tabela-usuarios td {
+    padding: 14px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+/* Cabeçalho da tabela. */
+.tabela-usuarios th {
+    background: #202a33;
+
+    color: white;
+}
+
+
+/* Efeito ao passar o mouse por uma linha. */
+.tabela-usuarios tr:hover {
+    background: #f5f7f8;
+}
+
+
+/* Mensagem quando não existem usuários. */
+.sem-usuarios {
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+}
