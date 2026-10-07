@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}App Loja{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a href="{{ url_for('dashboard') }}" class="logo">App Loja</a>
+    <nav>
+        <a href="{{ url_for('dashboard') }}">Produtos</a>
+        <a href="{{ url_for('cadastrar_usuario') }}">Cadastrar Usuário</a>
+        <a href="{{ url_for('logout') }}">Sair</a>
+    </nav>
+</header>
+<main class="conteudo">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

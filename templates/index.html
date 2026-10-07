@@ -1,0 +1,18 @@
+{% extends "base_sem_menu.html" %}
+
+{% block title %}Início | App Loja{% endblock %}
+
+{% block content %}
+<main class="home-page">
+    <section class="home-card">
+        <div class="home-icon">🛍️</div>
+        <span class="tag">PROJETO FLASK</span>
+        <h1>Bem-vindo ao <span>App Loja</span></h1>
+        <p>
+            Projeto simples para estudo de Flask, rotas, templates HTML e CSS.
+            Os cadastros são apenas demonstrativos e não utilizam banco de dados.
+        </p>
+        <a href="{{ url_for('login') }}" class="btn-primary">Acessar sistema</a>
+    </section>
+</main>
+{% endblock %}

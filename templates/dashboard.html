@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Produtos | App Loja{% endblock %}
+
+{% block content %}
+<h1>Produtos</h1>
+<p>Olá, {{ usuario }}. Estes são os produtos disponíveis.</p>
+
+<div class="produtos">
+    {% for produto in produtos %}
+        <div class="produto-card">
+            <span class="produto-id">Produto #{{ produto.id }}</span>
+            <h2>{{ produto.nome }}</h2>
+            <p class="preco">R$ {{ "%.2f"|format(produto.preco) }}</p>
+            <p>Estoque: {{ produto.estoque }} unidades</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
