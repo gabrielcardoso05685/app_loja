@@ -55,9 +55,21 @@ a {
 /* Organiza os links do menu. */
 .topbar nav {
     display: flex;
+    align-items: center;
     gap: 20px;
+    flex-wrap: nowrap;
 }
 
+/* Mantém todos os itens da navbar na mesma linha. */
+.topbar nav > a,
+.menu-dropdown {
+    flex-shrink: 0;
+}
+
+/* Evita que os textos dos menus quebrem de linha. */
+.topbar nav a {
+    white-space: nowrap;
+}
 
 /* =========================================================
    CONTEÚDO PRINCIPAL
@@ -248,8 +260,9 @@ button {
 /* Link principal "Usuários". */
 .menu-link {
     display: block;
-    padding: 18px 0;
+    padding: 0;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .seta {
@@ -280,8 +293,9 @@ button {
 
 
 /* Mostra o submenu quando o mouse passa sobre Usuários. */
-.menu-dropdown:hover .submenu {
-    display: block;
+.menu-dropdown {
+    position: relative;
+    flex-shrink: 0;
 }
 
 
