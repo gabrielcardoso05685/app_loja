@@ -124,7 +124,7 @@ def cadastrar_produto():
         )
 
     return render_template(
-        "cadastro_usuario.html",
+        "cadastro_produtos.html",
         produtos=produtos
         mensagem=mensagem
     )
