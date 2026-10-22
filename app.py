@@ -99,17 +99,33 @@ def cadastrar_usuario():
             "estado": request.form.get("estado")
         }
 
+
+@app.route("/produtos/cadastrar", methods=["GET", "POST"])
+def cadastrar_produto():
+    if "usuario" not in session:
+        return redirect(url_for("login"))
+
+    mensagem = None
+
+    if request.method == "POST":
+
+        # Pega os dados preenchidos no formulário.
+        novo_produto = {
+            "nome": request.form.get("nome"),
+            "preco": request.form.get("preco")
+            "estoque": request.form.get("estoque")
+        }
+
         # Adiciona o novo usuário à lista.
-        usuarios.append(novo_usuario)
+        produtos.append(novo_produto)
 
         mensagem = (
-            f"Cadastro de {novo_usuario['nome']} "
-            f"({novo_usuario['email']}) realizado com sucesso."
+            f"Cadastro de {novo_produto['nome']} cadastrado com sucesso"
         )
 
     return render_template(
         "cadastro_usuario.html",
-        usuario=session["usuario"],
+        produtos=produtos
         mensagem=mensagem
     )
 

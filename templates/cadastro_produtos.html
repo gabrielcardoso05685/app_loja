@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+Cadastrar produto | App Loja
+{% endblock %}
+
+
+{% block content %}
+
+<h1>
+    Cadastro de Usuário
+</h1>
+
+
+<!--
+    Mostra a mensagem de sucesso somente
+    depois que o formulário for enviado.
+-->
+{% if mensagem %}
+
+    <div class="sucesso">
+        {{ mensagem }}
+    </div>
+
+{% endif %}
+
+
+<form
+    class="formulario"
+    method="POST"
+>
+
+
+    <div class="campo">
+
+        <label for="nome">
+            Nome do produto
+        </label>
+
+        <input
+            type="text"
+            id="nome"
+            name="nome"
+        >
+
+    </div>
+
+ <div class="campo">
+
+        <label for="preco">
+            preco
+        </label>
+
+        <input
+            type="float"
+            id="preco"
+            name="preco"
+        >
+
+    </div>
+</form>
+
+{% endblock %}
+```
