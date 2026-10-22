@@ -1,259 +1,104 @@
+
 {% extends "base.html" %}
 
-{% block title %}
-Cadastrar Usuário | App Loja
-{% endblock %}
-
+{% block title %}Cadastro de Usuários | App Loja{% endblock %}
 
 {% block content %}
 
-<h1>
-    Cadastro de Usuário
-</h1>
-
-
-<!--
-    Mostra a mensagem de sucesso somente
-    depois que o formulário for enviado.
--->
-{% if mensagem %}
-
-    <div class="sucesso">
-        {{ mensagem }}
+<section class="formulario-pagina">
+    <div class="cabecalho-pagina">
+        <h1>Cadastro de Usuário</h1>
+        <p class="descricao-listagem">
+            Preencha os dados para cadastrar um novo usuário.
+        </p>
     </div>
 
-{% endif %}
-
-
-<!--
-    Formulário responsável pelo cadastro.
-
-    Os dados são enviados para a função
-    cadastrar_usuario() usando POST.
--->
-<form
-    class="formulario"
-    method="POST"
->
-
-
-    <div class="campo">
-
-        <label for="nome">
-            Nome
-        </label>
-
-        <input
-            type="text"
-            id="nome"
-            name="nome"
-            required
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="email">
-            E-mail
-        </label>
-
-        <input
-            type="email"
-            id="email"
-            name="email"
-            required
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="celular">
-            Celular
-        </label>
-
-        <input
-            type="text"
-            id="celular"
-            name="celular"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="nascimento">
-            Data de Nascimento
-        </label>
-
-        <input
-            type="date"
-            id="nascimento"
-            name="nascimento"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="cpf">
-            CPF
-        </label>
-
-        <input
-            type="text"
-            id="cpf"
-            name="cpf"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="nivel">
-            Nível de Acesso
-        </label>
-
-        <select
-            id="nivel"
-            name="nivel"
-        >
-
-            <option>
-                Usuário
-            </option>
-
-            <option>
-                Administrador
-            </option>
-
-        </select>
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="cep">
-            CEP
-        </label>
-
-        <input
-            type="text"
-            id="cep"
-            name="cep"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="endereco">
-            Endereço
-        </label>
-
-        <input
-            type="text"
-            id="endereco"
-            name="endereco"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="numero">
-            Número
-        </label>
-
-        <input
-            type="text"
-            id="numero"
-            name="numero"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="complemento">
-            Complemento
-        </label>
-
-        <input
-            type="text"
-            id="complemento"
-            name="complemento"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="cidade">
-            Cidade
-        </label>
-
-        <input
-            type="text"
-            id="cidade"
-            name="cidade"
-        >
-
-    </div>
-
-
-    <div class="campo">
-
-        <label for="estado">
-            Estado
-        </label>
-
-        <select
-            id="estado"
-            name="estado"
-        >
-
-            <option>SP</option>
-            <option>RJ</option>
-            <option>MG</option>
-            <option>PR</option>
-
-        </select>
-
-    </div>
-
-
-    <!-- Botões do formulário -->
-    <div class="acoes">
-
-        <!-- Limpa os campos do formulário -->
-        <button
-            type="reset"
-            class="cinza"
-        >
-            Limpar
-        </button>
-
-
-        <!-- Envia o formulário -->
-        <button type="submit">
-            Salvar
-        </button>
-
-    </div>
-
-</form>
+    {% if mensagem %}
+        <div class="sucesso">{{ mensagem }}</div>
+    {% endif %}
+
+    <form class="formulario" method="POST">
+
+        <div class="campo">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" required>
+        </div>
+
+        <div class="campo">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="campo">
+            <label for="celular">Celular</label>
+            <input type="text" id="celular" name="celular">
+        </div>
+
+        <div class="campo">
+            <label for="nascimento">Data de nascimento</label>
+            <input type="date" id="nascimento" name="nascimento">
+        </div>
+
+        <div class="campo">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf">
+        </div>
+
+        <div class="campo">
+            <label for="nivel">Nível de acesso</label>
+            <select id="nivel" name="nivel">
+                <option value="Usuário">Usuário</option>
+                <option value="Administrador">Administrador</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" name="cep">
+        </div>
+
+        <div class="campo">
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" name="endereco">
+        </div>
+
+        <div class="campo">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero">
+        </div>
+
+        <div class="campo">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="complemento">
+        </div>
+
+        <div class="campo">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade">
+        </div>
+
+        <div class="campo">
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado">
+                <option value="SP">São Paulo</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PR">Paraná</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="BA">Bahia</option>
+                <option value="GO">Goiás</option>
+                <option value="DF">Distrito Federal</option>
+            </select>
+        </div>
+
+        <div class="acoes">
+            <button type="reset" class="cinza">Limpar</button>
+            <button type="submit">Salvar usuário</button>
+        </div>
+
+    </form>
+</section>
 
 {% endblock %}
-
