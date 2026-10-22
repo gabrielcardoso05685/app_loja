@@ -1,64 +1,75 @@
 {% extends "base.html" %}
 
 {% block title %}
-Cadastrar produto | App Loja
+Cadastro de Produtos | App Loja
 {% endblock %}
-
 
 {% block content %}
 
-<h1>
-    Cadastro de Usuário
-</h1>
+<div class="cabecalho-pagina">
+    <h1>Cadastro de Produtos</h1>
+    <p class="descricao-listagem">
+        Preencha os dados abaixo para adicionar um produto à loja.
+    </p>
+</div>
 
-
-<!--
-    Mostra a mensagem de sucesso somente
-    depois que o formulário for enviado.
--->
 {% if mensagem %}
-
-    <div class="sucesso">
-        {{ mensagem }}
-    </div>
-
+    <div class="sucesso">{{ mensagem }}</div>
 {% endif %}
 
+{% if erro %}
+    <div class="erro">{{ erro }}</div>
+{% endif %}
 
-<form
-    class="formulario"
-    method="POST"
->
+<form class="formulario formulario-produto" method="POST">
 
-
-    <div class="campo">
-
-        <label for="nome">
-            Nome do produto
-        </label>
-
+    <div class="campo campo-completo">
+        <label for="nome">Nome do produto</label>
         <input
             type="text"
             id="nome"
             name="nome"
+            placeholder="Ex.: Camiseta Básica"
+            maxlength="100"
+            required
         >
-
     </div>
 
- <div class="campo">
-
-        <label for="preco">
-            preco
-        </label>
-
+    <div class="campo">
+        <label for="preco">Preço (R$)</label>
         <input
-            type="float"
+            type="number"
             id="preco"
             name="preco"
+            placeholder="Ex.: 49.90"
+            min="0"
+            step="0.01"
+            required
         >
-
     </div>
+
+    <div class="campo">
+        <label for="estoque">Quantidade em estoque</label>
+        <input
+            type="number"
+            id="estoque"
+            name="estoque"
+            placeholder="Ex.: 15"
+            min="0"
+            step="1"
+            required
+        >
+    </div>
+
+    <div class="acoes">
+        <button type="reset" class="cinza">Limpar</button>
+        <button type="submit">Cadastrar produto</button>
+    </div>
+
 </form>
 
+<div class="voltar-dashboard">
+    <a href="{{ url_for('dashboard') }}">← Voltar para o dashboard</a>
+</div>
+
 {% endblock %}
-```
