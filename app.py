@@ -1,30 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 
-# Cria a aplicação Flask.
 app = Flask(__name__)
-
-# Chave usada pelo Flask para proteger os dados da session.
-# A session mantém o usuário logado entre as páginas.
 app.secret_key = "chave-secreta-do-projeto"
 
-
-# Usuário fixo usado para acessar o sistema.
-# Em uma aplicação real, esses dados viriam de um banco de dados.
+# Usuário de teste para acessar o sistema.
 USUARIO_TESTE = {
     "nome": "Administrador",
     "email": "admin@loja.com",
     "senha": "123"
 }
 
-
-# Lista de usuários cadastrados durante a execução do sistema.
-# Em uma aplicação real, esses dados seriam salvos em um banco de dados.
+# Lista de usuários cadastrados.
 usuarios = [
     USUARIO_TESTE.copy()
 ]
 
-
-# Lista de produtos usada no dashboard.
+# Produtos iniciais da loja.
 produtos = [
     {"id": 1, "nome": "Camiseta Básica", "preco": 49.90, "estoque": 15},
     {"id": 2, "nome": "Calça Jeans", "preco": 119.90, "estoque": 8},
@@ -32,15 +23,13 @@ produtos = [
 ]
 
 
-# ROTA PRINCIPAL
-# Função responsável por abrir a página inicial.
+# Página inicial: redireciona para o login.
 @app.route("/")
 def index():
     return redirect(url_for("login"))
 
 
-# LOGIN
-# Mostra o formulário e verifica os dados enviados.
+# Login do sistema.
 @app.route("/login", methods=["GET", "POST"])
 def login():
     erro = None
@@ -58,22 +47,84 @@ def login():
     return render_template("login.html", erro=erro)
 
 
-# DASHBOARD
-# Mostra a tela principal e os produtos cadastrados.
+# Dashboard com os produtos e indicadores.
 @app.route("/dashboard")
 def dashboard():
     if "usuario" not in session:
         return redirect(url_for("login"))
 
+    total_unidades = sum(produto["estoque"] for produto in produtos)
+
+    valor_estoque = sum(
+        produto["preco"] * produto["estoque"]
+        for produto in produtos
+    )
+
+    estoque_baixo = sum(
+        1 for produto in produtos if produto["estoque"] <= 5
+    )
+
     return render_template(
         "dashboard.html",
         usuario=session["usuario"],
-        produtos=produtos
+        produtos=produtos,
+        total_unidades=total_unidades,
+        valor_estoque=valor_estoque,
+        estoque_baixo=estoque_baixo
     )
 
 
-# CADASTRO DE USUÁRIO
-# Mostra o formulário e adiciona o usuário à lista.
+# Cadastro de produtos.
+@app.route("/produtos/cadastrar", methods=["GET", "POST"])
+def cadastrar_produto():
+    if "usuario" not in session:
+        return redirect(url_for("login"))
+
+    erro = None
+    mensagem = None
+
+    if request.method == "POST":
+        nome = request.form.get("nome", "").strip()
+        preco_texto = request.form.get("preco", "").strip()
+        estoque_texto = request.form.get("estoque", "").strip()
+
+        try:
+            # Aceita preço com vírgula ou ponto decimal.
+            preco = float(preco_texto.replace(",", "."))
+            estoque = int(estoque_texto)
+
+            if not nome:
+                erro = "Informe o nome do produto."
+            elif preco < 0:
+                erro = "O preço não pode ser negativo."
+            elif estoque < 0:
+                erro = "A quantidade em estoque não pode ser negativa."
+            else:
+                novo_produto = {
+                    "id": max(
+                        (produto["id"] for produto in produtos),
+                        default=0
+                    ) + 1,
+                    "nome": nome,
+                    "preco": preco,
+                    "estoque": estoque
+                }
+
+                produtos.append(novo_produto)
+                mensagem = f"Produto '{nome}' cadastrado com sucesso."
+
+        except ValueError:
+            erro = "Informe um preço válido e uma quantidade inteira."
+
+    return render_template(
+        "cadastro_produto.html",
+        usuario=session["usuario"],
+        erro=erro,
+        mensagem=mensagem
+    )
+
+
+# Cadastro de usuários.
 @app.route("/usuarios/cadastrar", methods=["GET", "POST"])
 def cadastrar_usuario():
     if "usuario" not in session:
@@ -82,8 +133,6 @@ def cadastrar_usuario():
     mensagem = None
 
     if request.method == "POST":
-
-        # Pega os dados preenchidos no formulário.
         novo_usuario = {
             "nome": request.form.get("nome"),
             "email": request.form.get("email"),
@@ -99,47 +148,25 @@ def cadastrar_usuario():
             "estado": request.form.get("estado")
         }
 
-
-@app.route("/produtos/cadastrar", methods=["GET", "POST"])
-def cadastrar_produto():
-    if "usuario" not in session:
-        return redirect(url_for("login"))
-
-    mensagem = None
-
-    if request.method == "POST":
-
-        # Pega os dados preenchidos no formulário.
-        novo_produto = {
-            "nome": request.form.get("nome"),
-            "preco": request.form.get("preco")
-            "estoque": request.form.get("estoque")
-        }
-
-        # Adiciona o novo usuário à lista.
-        produtos.append(novo_produto)
-
+        usuarios.append(novo_usuario)
         mensagem = (
-            f"Cadastro de {novo_produto['nome']} cadastrado com sucesso"
+            f"Cadastro de {novo_usuario['nome']} "
+            f"({novo_usuario['email']}) realizado com sucesso."
         )
 
     return render_template(
-        "cadastro_produtos.html",
-        produtos=produtos
+        "cadastro_usuario.html",
+        usuario=session["usuario"],
         mensagem=mensagem
     )
 
 
-# LISTAGEM DE USUÁRIOS
-# Mostra todos os usuários cadastrados no sistema.
+# Listagem de usuários.
 @app.route("/usuarios")
 def listar_usuarios():
-
-    # Impede que alguém acesse a página sem estar logado.
     if "usuario" not in session:
         return redirect(url_for("login"))
 
-    # Envia a lista de usuários para o HTML.
     return render_template(
         "listar_usuarios.html",
         usuario=session["usuario"],
@@ -147,14 +174,12 @@ def listar_usuarios():
     )
 
 
-# LOGOUT
-# Encerra a sessão do usuário e volta para o login.
+# Logout.
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("login"))
 
 
-# Inicia o servidor Flask quando este arquivo é executado diretamente.
 if __name__ == "__main__":
     app.run(debug=True)
