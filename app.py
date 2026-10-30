@@ -23,7 +23,7 @@ produtos = [
 # Encaminha o acesso inicial para a tela de login.
 @app.route("/")
 def index():
-    return redirect(url_for("login"))
+    return render_template('login.html')
 
 
 # Exibe o formulário e verifica as credenciais da conta de teste.
@@ -37,7 +37,7 @@ def login():
 
         if email == USUARIO_TESTE["email"] and senha == USUARIO_TESTE["senha"]:
             session["usuario"] = USUARIO_TESTE["nome"]
-            return redirect(url_for("dashboard"))
+            return render_template('dashboard')
 
         erro = "E-mail ou senha inválidos."
 

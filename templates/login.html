@@ -2,13 +2,16 @@
 {% block title %} Tela de login {% endblck %}
 
 {% block conteudo %}
-<div class="login-logo">AL</div>
+ <main class="login-card">
+        <div class="login-logo">AL</div>
+
         <h1>App Loja</h1>
         <p class="login-descricao">Entre para acessar o sistema.</p>
 
         {% if erro %}
             <div class="erro">{{ erro }}</div>
         {% endif %}
+
         <form method="POST" class="form-login">
             <label for="email">E-mail</label>
             <input
@@ -38,4 +41,5 @@
             <span>E-mail: admin@loja.com</span>
             <span>Senha: 123</span>
         </div>
+    </main>
 {% endblock %}
