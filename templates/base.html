@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,25 +6,52 @@
 
     <title>{% block title %}App Loja{% endblock %}</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
 <body>
 
     <header class="topbar">
-        <a href="{{ url_for('dashboard') }}" class="logo">App Loja</a>
+        <a href="{{ url_for('dashboard') }}" class="logo">
+            App Loja
+        </a>
 
         <nav>
             <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('cadastrar_produto') }}">Cadastrar Produtos</a>
 
+            <!-- Menu de produtos com opções de listagem e cadastro. -->
+            <div class="menu-dropdown">
+                <a href="{{ url_for('listar_produtos') }}" class="menu-link">
+                    Produtos <span class="seta">▼</span>
+                </a>
+
+                <div class="submenu">
+                    <a href="{{ url_for('listar_produtos') }}">
+                        Listagem de Produtos
+                    </a>
+
+                    <a href="{{ url_for('cadastrar_produto') }}">
+                        Cadastro de Produtos
+                    </a>
+                </div>
+            </div>
+
+            <!-- Menu de usuários mantido no mesmo padrão. -->
             <div class="menu-dropdown">
                 <a href="#" class="menu-link">
                     Usuários <span class="seta">▼</span>
                 </a>
 
                 <div class="submenu">
-                    <a href="{{ url_for('listar_usuarios') }}">Listagem de Usuários</a>
-                    <a href="{{ url_for('cadastrar_usuario') }}">Cadastro de Usuários</a>
+                    <a href="{{ url_for('listar_usuarios') }}">
+                        Listagem de Usuários
+                    </a>
+
+                    <a href="{{ url_for('cadastrar_usuario') }}">
+                        Cadastro de Usuários
+                    </a>
                 </div>
             </div>
 
@@ -33,6 +59,7 @@
         </nav>
     </header>
 
+    <!-- Cada página preenche este bloco com seu próprio conteúdo. -->
     <main class="conteudo">
         {% block content %}{% endblock %}
     </main>

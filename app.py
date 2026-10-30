@@ -1,15 +1,16 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
 app.secret_key = "chave-secreta-do-projeto"
 
+# Conta usada para acessar o sistema durante os testes.
 USUARIO_TESTE = {
     "nome": "Administrador",
     "email": "admin@loja.com",
     "senha": "123"
 }
 
+# Os dados ficam na memória e são perdidos ao reiniciar o aplicativo.
 usuarios = [USUARIO_TESTE.copy()]
 
 produtos = [
@@ -19,11 +20,13 @@ produtos = [
 ]
 
 
+# Encaminha o acesso inicial para a tela de login.
 @app.route("/")
 def index():
     return redirect(url_for("login"))
 
 
+# Exibe o formulário e verifica as credenciais da conta de teste.
 @app.route("/login", methods=["GET", "POST"])
 def login():
     erro = None
@@ -41,6 +44,7 @@ def login():
     return render_template("login.html", erro=erro)
 
 
+# Mostra os indicadores calculados a partir dos produtos cadastrados.
 @app.route("/dashboard")
 def dashboard():
     if "usuario" not in session:
@@ -60,6 +64,20 @@ def dashboard():
     )
 
 
+# Exibe a listagem de produtos somente para usuários autenticados.
+@app.route("/produtos")
+def listar_produtos():
+    if "usuario" not in session:
+        return redirect(url_for("login"))
+
+    return render_template(
+        "listar_produtos.html",
+        usuario=session["usuario"],
+        produtos=produtos
+    )
+
+
+# Valida os dados, cadastra o produto e redireciona para a listagem.
 @app.route("/produtos/cadastrar", methods=["GET", "POST"])
 def cadastrar_produto():
     if "usuario" not in session:
@@ -73,6 +91,7 @@ def cadastrar_produto():
         estoque_texto = request.form.get("estoque", "").strip()
 
         try:
+            # Aceita preços com vírgula ou ponto como separador decimal.
             preco = float(preco_texto.replace(",", "."))
             estoque = int(estoque_texto)
 
@@ -83,6 +102,7 @@ def cadastrar_produto():
             elif estoque < 0:
                 erro = "O estoque não pode ser negativo."
             else:
+                # Gera um identificador maior que os existentes.
                 novo_id = max(
                     (p["id"] for p in produtos),
                     default=0
@@ -95,7 +115,7 @@ def cadastrar_produto():
                     "estoque": estoque
                 })
 
-                return redirect(url_for("dashboard"))
+                return redirect(url_for("listar_produtos"))
 
         except ValueError:
             erro = "Informe um preço válido e uma quantidade inteira."
@@ -107,6 +127,7 @@ def cadastrar_produto():
     )
 
 
+# Recebe os dados do formulário e adiciona um usuário à lista.
 @app.route("/usuarios/cadastrar", methods=["GET", "POST"])
 def cadastrar_usuario():
     if "usuario" not in session:
@@ -140,6 +161,7 @@ def cadastrar_usuario():
     )
 
 
+# Exibe os usuários cadastrados no sistema.
 @app.route("/usuarios")
 def listar_usuarios():
     if "usuario" not in session:
@@ -152,11 +174,13 @@ def listar_usuarios():
     )
 
 
+# Encerra a sessão e retorna à tela de login.
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("login"))
 
 
+# Inicia o servidor de desenvolvimento quando este arquivo é executado.
 if __name__ == "__main__":
     app.run(debug=True)

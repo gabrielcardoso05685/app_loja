@@ -1,24 +1,14 @@
+{% extends 'layout/base_limpa.html' %}
+{% block title %} Tela de login {% endblck %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | App Loja</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="pagina-login">
-
-    <main class="login-card">
-        <div class="login-logo">AL</div>
-
+{% block conteudo %}
+<div class="login-logo">AL</div>
         <h1>App Loja</h1>
         <p class="login-descricao">Entre para acessar o sistema.</p>
 
         {% if erro %}
             <div class="erro">{{ erro }}</div>
         {% endif %}
-
         <form method="POST" class="form-login">
             <label for="email">E-mail</label>
             <input
@@ -48,7 +38,4 @@
             <span>E-mail: admin@loja.com</span>
             <span>Senha: 123</span>
         </div>
-    </main>
-
-</body>
-</html>
+{% endblock %}
