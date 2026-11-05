@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout/base_menu.html" %}
 
 {% block title %}Produtos Cadastrados | App Loja{% endblock %}
 
@@ -7,6 +7,7 @@
 <section class="listagem-pagina">
 
     <div class="dashboard-header">
+
         <div>
             <h1>Produtos Cadastrados</h1>
 
@@ -18,78 +19,81 @@
         <a href="{{ url_for('cadastrar_produto') }}" class="botao-link">
             + Cadastrar produto
         </a>
+
     </div>
 
-    <!-- Exibe a tabela quando há produtos cadastrados. -->
     {% if produtos %}
 
-        <div class="tabela-container">
-            <table class="tabela-usuarios tabela-produtos">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Produto</th>
-                        <th>Preço unitário</th>
-                        <th>Estoque</th>
-                        <th>Situação</th>
-                    </tr>
-                </thead>
+    <div class="tabela-container">
 
-                <tbody>
-                    {% for produto in produtos %}
-                        <tr>
-                            <td>#{{ produto.id }}</td>
+        <table class="tabela-usuarios tabela-produtos">
 
-                            <td>
-                                <strong>{{ produto.nome }}</strong>
-                            </td>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produto</th>
+                    <th>Preço unitário</th>
+                    <th>Estoque</th>
+                    <th>Situação</th>
+                </tr>
+            </thead>
 
-                            <td>
-                                R$ {{ "%.2f" | format(produto.preco) | replace(".", ",") }}
-                            </td>
+            <tbody>
 
-                            <td>
-                                {{ produto.estoque }} unidade(s)
-                            </td>
+                {% for produto in produtos %}
 
-                            <td>
-                                <!-- Define a situação conforme o estoque. -->
-                                {% if produto.estoque == 0 %}
+                <tr>
+                    <td>#{{ produto.id }}</td>
+                    <td><strong>{{ produto.nome }}</strong></td>
 
-                                    <span class="status-produto status-esgotado">
-                                        Esgotado
-                                    </span>
+                    <td>
+                        R$ {{ "%.2f" | format(produto.preco) | replace(".", ",") }}
+                    </td>
 
-                                {% elif produto.estoque <= 5 %}
+                    <td>{{ produto.estoque }} unidade(s)</td>
 
-                                    <span class="status-produto status-baixo">
-                                        Estoque baixo
-                                    </span>
+                    <td>
 
-                                {% else %}
+                        {% if produto.estoque == 0 %}
 
-                                    <span class="status-produto status-disponivel">
-                                        Disponível
-                                    </span>
+                            <span class="status-produto status-esgotado">
+                                Esgotado
+                            </span>
 
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                        {% elif produto.estoque <= 5 %}
+
+                            <span class="status-produto status-baixo">
+                                Estoque baixo
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-produto status-disponivel">
+                                Disponível
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
     {% else %}
 
-        <!-- Mensagem apresentada quando a lista está vazia. -->
-        <div class="sem-usuarios">
-            <p>Nenhum produto cadastrado no momento.</p>
+    <div class="sem-usuarios">
+        <p>Nenhum produto cadastrado no momento.</p>
 
-            <a href="{{ url_for('cadastrar_produto') }}">
-                Cadastrar o primeiro produto
-            </a>
-        </div>
+        <a href="{{ url_for('cadastrar_produto') }}">
+            Cadastrar o primeiro produto
+        </a>
+    </div>
 
     {% endif %}
 

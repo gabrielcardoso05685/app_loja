@@ -1,11 +1,11 @@
-
-{% extends "base.html" %}
+{% extends "layout/base_menu.html" %}
 
 {% block title %}Usuários Cadastrados | App Loja{% endblock %}
 
 {% block content %}
 
 <section class="listagem-pagina">
+
     <h1>Usuários Cadastrados</h1>
 
     <p class="descricao-listagem">
@@ -14,41 +14,50 @@
 
     {% if usuarios %}
 
-        <div class="tabela-container">
-            <table class="tabela-usuarios">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Celular</th>
-                        <th>Nível</th>
-                        <th>Cidade</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
+    <div class="tabela-container">
 
-                <tbody>
-                    {% for usuario in usuarios %}
-                        <tr>
-                            <td>{{ usuario.nome or "-" }}</td>
-                            <td>{{ usuario.email or "-" }}</td>
-                            <td>{{ usuario.celular or "-" }}</td>
-                            <td>{{ usuario.nivel or "Administrador" }}</td>
-                            <td>{{ usuario.cidade or "-" }}</td>
-                            <td>{{ usuario.estado or "-" }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <table class="tabela-usuarios">
+
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Celular</th>
+                    <th>Nível</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for usuario in usuarios %}
+
+                <tr>
+                    <td>{{ usuario.nome or "-" }}</td>
+                    <td>{{ usuario.email or "-" }}</td>
+                    <td>{{ usuario.celular or "-" }}</td>
+                    <td>{{ usuario.nivel or "Administrador" }}</td>
+                    <td>{{ usuario.cidade or "-" }}</td>
+                    <td>{{ usuario.estado or "-" }}</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
     {% else %}
 
-        <div class="sem-usuarios">
-            Nenhum usuário cadastrado.
-        </div>
+    <div class="sem-usuarios">
+        Nenhum usuário cadastrado.
+    </div>
 
     {% endif %}
+
 </section>
 
 {% endblock %}

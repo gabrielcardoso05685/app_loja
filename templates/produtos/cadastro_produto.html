@@ -1,13 +1,14 @@
+{% extends "layout/base_menu.html" %}
 
-{% extends "base.html" %}
-
-{% block title %} Cadastro de Produtos | App Loja{% endblock %}
+{% block title %}Cadastro de Produtos | App Loja{% endblock %}
 
 {% block content %}
 
 <section class="formulario-pagina">
+
     <div class="cabecalho-pagina">
         <h1>Cadastro de Produtos</h1>
+
         <p class="descricao-listagem">
             Preencha os dados abaixo para adicionar um produto à loja.
         </p>
@@ -69,8 +70,11 @@
     </form>
 
     <p class="voltar-dashboard">
-        <a href="{{ url_for('dashboard') }}">← Voltar para o dashboard</a>
+        <a href="{{ url_for('dashboard') }}">
+            ← Voltar para o dashboard
+        </a>
     </p>
+
 </section>
 
 {% endblock %}

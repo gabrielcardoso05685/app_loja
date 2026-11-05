@@ -1,45 +1,52 @@
-{% extends 'layout/base_limpa.html' %}
-{% block title %} Tela de login {% endblck %}
+{% extends "layout/base_limpa.html" %}
 
-{% block conteudo %}
- <main class="login-card">
-        <div class="login-logo">AL</div>
+{% block title %}Tela de Login | App Loja{% endblock %}
 
-        <h1>App Loja</h1>
-        <p class="login-descricao">Entre para acessar o sistema.</p>
+{% block content %}
 
-        {% if erro %}
-            <div class="erro">{{ erro }}</div>
-        {% endif %}
+<main class="login-card">
 
-        <form method="POST" class="form-login">
-            <label for="email">E-mail</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Digite seu e-mail"
-                autocomplete="username"
-                required
-            >
+    <div class="login-logo">AL</div>
 
-            <label for="senha">Senha</label>
-            <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-                autocomplete="current-password"
-                required
-            >
+    <h1>App Loja</h1>
+    <p class="login-descricao">Entre para acessar o sistema.</p>
 
-            <button type="submit">Entrar</button>
-        </form>
+    {% if erro %}
+        <div class="erro">{{ erro }}</div>
+    {% endif %}
 
-        <div class="dados-teste">
-            <strong>Usuário de teste</strong>
-            <span>E-mail: admin@loja.com</span>
-            <span>Senha: 123</span>
-        </div>
-    </main>
+    <form method="POST" class="form-login">
+
+        <label for="email">E-mail</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Digite seu e-mail"
+            autocomplete="username"
+            required
+        >
+
+        <label for="senha">Senha</label>
+        <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+        >
+
+        <button type="submit">Entrar</button>
+
+    </form>
+
+    <div class="dados-teste">
+        <strong>Usuário de teste</strong>
+        <span>E-mail: admin@loja.com</span>
+        <span>Senha: 123</span>
+    </div>
+
+</main>
+
 {% endblock %}
