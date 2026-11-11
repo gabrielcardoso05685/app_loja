@@ -47,7 +47,7 @@
                     <td><strong>{{ produto.nome }}</strong></td>
 
                     <td>
-                        R$ {{ "%.2f" | format(produto.preco) | replace(".", ",") }}
+                        R$ {{ produto.preco }}
                     </td>
 
                     <td>{{ produto.estoque }} unidade(s)</td>
