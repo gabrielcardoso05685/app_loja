@@ -1,12 +1,11 @@
-
-{% extends "base.html" %}
+{% extends "layout/base_limpa.html" %}
 
 {% block title %}Início | App Loja{% endblock %}
 
-{% block conteudo %}
+{% block content %}
 
-<section class="home-page">
-    <div class="home-card">
+<main class="home-page">
+    <section class="home-card">
         <div class="home-icon">🛍️</div>
 
         <span class="tag">PROJETO FLASK</span>
@@ -16,7 +15,7 @@
         <a href="{{ url_for('login') }}" class="btn-primary">
             Acessar sistema
         </a>
-    </div>
-</section>
+    </section>
+</main>
 
 {% endblock %}

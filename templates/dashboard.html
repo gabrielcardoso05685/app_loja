@@ -41,15 +41,6 @@
     </div>
 
     <div class="indicador-card">
-        <div class="indicador-icone icone-laranja">⚠️</div>
-        <div>
-            <p>Estoque baixo</p>
-            <h2>{{ estoque_baixo }}</h2>
-            <span>Produtos com até 5 unidades</span>
-        </div>
-    </div>
-
-    <div class="indicador-card">
         <div class="indicador-icone icone-roxo">💰</div>
         <div>
             <p>Valor em estoque</p>
@@ -108,29 +99,6 @@
 
                     <td>{{ produto.estoque }} unidade(s)</td>
 
-                    <td>
-
-                        {% if produto.estoque == 0 %}
-
-                            <span class="status-produto status-esgotado">
-                                Esgotado
-                            </span>
-
-                        {% elif produto.estoque <= 5 %}
-
-                            <span class="status-produto status-baixo">
-                                Estoque baixo
-                            </span>
-
-                        {% else %}
-
-                            <span class="status-produto status-disponivel">
-                                Disponível
-                            </span>
-
-                        {% endif %}
-
-                    </td>
                 </tr>
 
                 {% endfor %}
