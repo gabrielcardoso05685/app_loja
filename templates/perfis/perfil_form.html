@@ -12,18 +12,16 @@
 
                 <form action="{{ url_for('inserir_perfil') }}" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <div class="mb-3">
+                  
                         <label for="nome" class="form-label">Nome do perfil</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex.: Administrador"
-                            value="{{ nome }}" required minlength="3" maxlength="100">
-                    </div>
+                        <input value="{{ nome }}" minlength="3" required>
+                        <input type="text" name="nome" id="nome" class="form-control" mb-3>
+                    
 
-                    <div class="mb-3">
+                    
                         <label for="descricao" class="form-label">Descrição (opcional)</label>
-                        <input type="text" class="form-control" id="descricao" name="descricao"
-                            placeholder="Ex.: Acesso total ao sistema" value="{{ descricao or '' }}" maxlength="255">
-                            <!-- ADICIONAR or '' EM TODO CAMPO QUE NÃO É OBRIGATÓRIO -->
-                    </div>
+                        <textarea class="form-control" id="descricao" name="descricao">{{ descricao or '' }}</textarea>
+                    
 
                     <div class="d-flex justify-content-between gap-2">
                         <a href="{{ url_for('listar_perfis') }}" class="btn btn-outline-secondary">Cancelar</a>
