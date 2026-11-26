@@ -1,9 +1,6 @@
--- DROP DATABASE IF EXISTS gestao;   -- tire o "--" só se quiser apagar tudo e recomeçar do zero
-
+--DROP DATABASE IF EXISTS app_loja;--
 CREATE DATABASE IF NOT EXISTS app_loja
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
-
+    CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE app_loja;
 
 -- perfis vem antes de usuarios, porque usuarios aponta para ele (chave estrangeira).

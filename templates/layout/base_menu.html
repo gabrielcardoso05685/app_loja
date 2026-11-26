@@ -12,7 +12,7 @@
 
   <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
     <div class="container">
-      <a class="navbar-brand" href="{{ url_for('dashboard') }}">Sistema de Gestão</a>
+      <a class="navbar-brand" href="{{ url_for('dashboard') }}">APP LOJA</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
               data-bs-target="#menu" aria-controls="menu" aria-expanded="false"
               aria-label="Abrir o menu">
@@ -28,6 +28,13 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ url_for('listar_perfis') }}">Listar Perfis</a></li>
               <li><a class="dropdown-item" href="{{ url_for('inserir_perfil') }}">Cadastrar Perfil</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {% if request.endpoint in ['listar_produtos', 'inserir_produto'] %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produtos</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url_for('listar_produtos') }}">Listar Produtos</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('inserir_produto') }}">Cadastrar Produto</a></li>
             </ul>
           </li>
         </ul>

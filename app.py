@@ -42,6 +42,14 @@ def listar_perfis():
     )
     return render_template('perfis/perfis_listar.html', perfis=perfis)
 
+@app.route('/produtos')
+def listar_produtos():
+    produtos = execute_query(
+        'SELECT id_produto, nome, descricao, preco, estoque FROM produtos ORDER BY nome',
+        fetch=True
+    )
+    return render_template('produtos/produtos_listar.html', produtos=produtos)
+
 
 @app.route('/perfis/inserir', methods=['GET', 'POST'])
 def inserir_perfil():
@@ -84,20 +92,14 @@ def inserir_produto():
         estoque = request.form.get('estoque', '').strip()
 
         try:
-            preco = float(preco)
-            estoque = int(estoque)
-        except ValueError:
-            flash('Informe um preço e um estoque válidos.', 'danger')
-        else:
-            if preco < 0 or estoque < 0:
-                flash('Informe um preço e um estoque válidos.', 'danger')
-            else:
-                execute_insert(
+            novo_produto = execute_insert(
                     'INSERT INTO produtos (nome, descricao, preco, estoque) '
                     'VALUES (%s, %s, %s, %s)',
                     (nome, descricao, preco, estoque)
                 )
-                flash('Produto foi cadastrado com sucesso.', 'success')
+            flash('Produto foi cadastrado com sucesso.', 'success')
+        except Error as erro:
+            flash('Erro ao cadastrar produto.', 'danger')
 
     return render_template(
         'produtos/produto_form.html',
