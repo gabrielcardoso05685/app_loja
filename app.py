@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_wtf.csrf import CSRFProtect
 from mysql.connector import Error
-
 from db import execute_insert, execute_one, execute_query
 from validacoes.validacoes_perfil import validar_perfil
 
@@ -47,7 +46,7 @@ def listar_perfis():
 @app.route('/perfis/inserir', methods=['GET', 'POST'])
 def inserir_perfil():
 
-    nome = 'Fatec'
+    nome = ''
     descricao = ''
 
     if request.method == 'POST':
@@ -69,6 +68,44 @@ def inserir_perfil():
     return render_template('perfis/perfil_form.html', nome=nome, descricao=descricao)
 
 
+
+@app.route('/produtos/inserir', methods=['GET', 'POST'])
+def inserir_produto():
+
+    nome = ''
+    descricao = ''
+    preco = ''
+    estoque = ''
+
+    if request.method == 'POST':
+        nome = request.form.get('nome', '').strip()
+        descricao = request.form.get('descricao', '').strip()
+        preco = request.form.get('preco', '').strip()
+        estoque = request.form.get('estoque', '').strip()
+
+        try:
+            preco = float(preco)
+            estoque = int(estoque)
+        except ValueError:
+            flash('Informe um preço e um estoque válidos.', 'danger')
+        else:
+            if preco < 0 or estoque < 0:
+                flash('Informe um preço e um estoque válidos.', 'danger')
+            else:
+                execute_insert(
+                    'INSERT INTO produtos (nome, descricao, preco, estoque) '
+                    'VALUES (%s, %s, %s, %s)',
+                    (nome, descricao, preco, estoque)
+                )
+                flash('Produto foi cadastrado com sucesso.', 'success')
+
+    return render_template(
+        'produtos/produto_form.html',
+        nome=nome,
+        descricao=descricao,
+        preco=preco,
+        estoque=estoque
+    )
 # ==============================================================================
 # TELAS DE ERROS
 # ==============================================================================
