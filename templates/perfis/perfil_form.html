@@ -8,17 +8,23 @@
 <div class="row justify-content-center">
     <div class="col-lg-6">
         <div class="card">
+            <div class="card-header bg-secondary text-white" fw-bold>
+               {{ 'Editar perfil' if acao == 'editar' else 'Cadastrar perfil' }}
+            </div>
             <div class="card-body">
+                {% if acao == 'editar' %}
+                    {% set destino = url_for('editar_perfil', id_perfil=id_perfil) %}
+                {% else %}
+                    {% set destino = url_for ('inserir_perfil') %}
+                {% endif %}
+                
 
-                <form action="{{ url_for('inserir_perfil') }}" method="post">
+                <form action="{{ destino }}" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                   
                         <label for="nome" class="form-label">Nome do perfil</label>
-                        <input value="{{ nome }}" minlength="3" required>
-                        <input type="text" name="nome" id="nome" class="form-control" mb-3>
-                    
-
-                    
+                        <input class="form-control" value="{{ nome }}" minlength="3" required name="nome" id="nome" type="text" placeholder="Digite o nome do perfil">
+                        <h3></h3>
                         <label for="descricao" class="form-label">Descrição (opcional)</label>
                         <textarea class="form-control" id="descricao" name="descricao">{{ descricao or '' }}</textarea>
                     

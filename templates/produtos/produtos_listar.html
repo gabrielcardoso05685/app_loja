@@ -4,7 +4,7 @@
 
 {% block conteudo %}
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h2 mb-0">Produtos Cadastrados</h1>
+    <h1 class="h2 mb-0">produtos Cadastrados</h1>
     <a href="{{ url_for('inserir_produto') }}" class="btn btn-primary">Cadastrar produto</a>
   </div>
 
@@ -14,8 +14,8 @@
         <th>Código</th>
         <th>Nome</th>
         <th>Descrição</th>
-        <th>Preço</th>
-        <th>Estoque</th>
+        <th>Cadastro</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -23,18 +23,19 @@
 
       <tr>
         <td>{{ produto.id_produto }}</td>
-        <td>{{ produto.nome }}</td>
+        <td id="nome_produto_{{produto.id_produto}}">{{ produto.nome }}</td>
         <td>{{ produto.descricao }}</td>
-        <td>{{ produto.preco }}</td>
-        <td>{{ produto.estoque }}</td>
-      </tr>
-
+        <td>{{ produto.criado_em.strftime('%d/%m/%Y %H:%M') }}</td>
         <td> 
-          <a href="#" class="btn btn-sm btn-warning">
-            <i class="bi bi-trash"></i>
+          <a href="{{ url_for('editar_produto', id_produto=produto.id_produto) }}" 
+          class="btn btn-sm btn-warning">
+            <i class="bi bi-pencil"></i>
           </a>
+          <button type="button" class="btn btn-sm btn-danger" 
+          title="Excluir" data-bs-toggle="modal" data-bs-target="#modalExcluir" 
+          onclick="prepararExclusao({{ produto.id_produto }})"><i class="bi bi-trash"></i></button>
         </td>
-
+        </td>
       </tr>
 
     {% else %}
@@ -44,4 +45,38 @@
         {% endfor %}
     </tbody>
   </table>
+
+  <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="tituloModalExcluir" 
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="tituloModalExcluir">Excluir produto</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <form id="formExcluir" action="" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="modal-body">
+          <p class="mb-0">Excluir o produto <strong id="nomeExcluir"></strong>? Esta ação não pode ser desfeita.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Excluir</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script> 
+function prepararExclusao(id){
+  const nome = document.getElementById('nome_produto_'+ id).textContent
+  document.getElementById('nomeExcluir').textContent = nome;
+  document.getElementById('formExcluir').action = '/produtos/' + id + '/excluir/'
+  }
+</script>
+
 {% endblock %}

@@ -23,15 +23,19 @@
 
       <tr>
         <td>{{ perfil.id_perfil }}</td>
-        <td>{{ perfil.nome }}</td>
+        <td id="nome_perfil_{{perfil.id_perfil}}">{{ perfil.nome }}</td>
         <td>{{ perfil.descricao }}</td>
         <td>{{ perfil.criado_em.strftime('%d/%m/%Y %H:%M') }}</td>
         <td> 
-          <a href="#" class="btn btn-sm btn-warning">
-            <i class="bi bi-trash"></i>
+          <a href="{{ url_for('editar_perfil', id_perfil=perfil.id_perfil) }}" 
+          class="btn btn-sm btn-warning">
+            <i class="bi bi-pencil"></i>
           </a>
+          <button type="button" class="btn btn-sm btn-danger" 
+          title="Excluir" data-bs-toggle="modal" data-bs-target="#modalExcluir" 
+          onclick="prepararExclusao({{ perfil.id_perfil }})"><i class="bi bi-trash"></i></button>
         </td>
-
+        </td>
       </tr>
 
     {% else %}
@@ -41,4 +45,38 @@
         {% endfor %}
     </tbody>
   </table>
+
+  <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="tituloModalExcluir" 
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="tituloModalExcluir">Excluir perfil</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <form id="formExcluir" action="" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="modal-body">
+          <p class="mb-0">Excluir o perfil <strong id="nomeExcluir"></strong>? Esta ação não pode ser desfeita.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Excluir</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script> 
+function prepararExclusao(id){
+  const nome = document.getElementById('nome_perfil_'+ id).textContent
+  document.getElementById('nomeExcluir').textContent = nome;
+  document.getElementById('formExcluir').action = '/perfis/' + id + '/excluir/'
+  }
+</script>
+
 {% endblock %}

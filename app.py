@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, url_for
 from flask_wtf.csrf import CSRFProtect
 from mysql.connector import Error
 from db import execute_insert, execute_one, execute_query
@@ -37,6 +37,82 @@ def listar_perfis():
     )
     return render_template('perfis/perfis_listar.html', perfis=perfis)
 
+@app.route('/perfis/<int:id_perfil>/editar', methods=['GET', 'POST'])
+def editar_perfil(id_perfil):
+    perfil = execute_one(
+        'SELECT id_perfil, nome, descricao FROM perfis WHERE id_perfil = %s', (id_perfil,),
+    )
+
+    if perfil is None:
+        abort(404)
+
+    nome = perfil['nome']
+    descricao = perfil['descricao']
+
+    if request.method == 'POST':
+        nome = request.form.get('nome', '').strip()
+        descricao = request.form.get('descricao', '').strip()
+
+        try:
+            execute_query('''
+                UPDATE perfis SET nome = %s, descricao = %s WHERE id_perfil = %s
+            ''', (nome, descricao, id_perfil))
+            return redirect(url_for('listar_perfis'))
+        
+        except Error as erro:
+            if erro.errno == 1062:
+                flash(f'Já existe um perfil com este nome', 'danger')
+            else:
+                raise
+
+    return render_template(
+            'perfis/perfil_form.html',
+            acao='editar',
+            id_perfil=id_perfil,
+            nome=nome,
+            descricao=descricao
+        )
+
+@app.route('/perfis/<int:id_perfil>/excluir/', methods=['POST'])
+def excluir_perfil(id_perfil):
+    perfil = execute_one(
+            'SELECT id_perfil, nome, descricao FROM perfis WHERE id_perfil = %s', (id_perfil,),
+        )
+    
+    if perfil is None:
+        abort(404)
+
+    try:
+        execute_query('DELETE FROM perfis WHERE id_perfil = %s',
+                      (id_perfil,),)
+        flash(f'O perfil {perfil["nome"]} foi excluido', 'danger')
+    except Error as erro:
+        if erro.errno == 1451:
+                    flash('PERFIL NÃO PODE SER EXCLUIDO!', 'danger')
+        else:
+            raise
+    return redirect(url_for('listar_perfis'))
+
+@app.route('/produtos/<int:id_produto>/excluir', methods=['POST'])
+def excluir_produto(id_produto):
+    produto = execute_one(
+            'SELECT id_produto, nome, descricao FROM perfis WHERE id_produto = %s', (id_produto,),
+        )
+    
+    if produto is None:
+        abort(404)
+
+    try:
+        execute_query('DELETE FROM perfis WHERE id_produto = %s',
+                      (id_produto,),)
+        flash(f'O perfil {produto["nome"]} foi excluido', 'danger')
+    except Error as erro:
+        if erro.errno == 1451:
+                    flash('PRODUTO NÃO PODE SER EXCLUIDO!', 'danger')
+        else:
+            raise
+    return redirect(url_for('listar_perfis'))
+
 @app.route('/produtos')
 def listar_produtos():
     produtos = execute_query(
@@ -68,7 +144,7 @@ def inserir_perfil():
         else:
             raise
        
-    return render_template('perfis/perfil_form.html', nome=nome, descricao=descricao)
+    return render_template('perfis/perfil_form.html', acao='inserir', nome=nome, descricao=descricao)
 
 
 
